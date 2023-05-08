@@ -55,7 +55,7 @@ app.post("/login", upload.none(), (req, res) => {
         from: "You Know",
         html: emailTemplate({
           email,
-          link: `${site_url}:${PORT}/account?token=${token}`,
+          link: site_url.indexOf('localhost') != -1 ? `${site_url}:${PORT}/account?token=${token}` : `${site_url}/account?token=${token}`
         }),
         subject: "Your Magic Link",
         to: email,
@@ -66,7 +66,7 @@ app.post("/login", upload.none(), (req, res) => {
           res.send("Can't send email.");
         } else {
           res.status(200);
-          res.send(`Magic link sent. : ${site_url}:${PORT}/account?token=${token}`);
+          res.send(`Magic link sent.`);
         }
     });
 });
